@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Base64 to Image</title>
+</head>
+<body>
+    <h1>Convert Base64 to Image</h1>
+    <textarea id="base64Input" placeholder="Paste base64 string here"></textarea>
+    <button onclick="convertBase64()">Convert</button>
+    <div id="imageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        async function convertBase64() {
+            const base64Str = document.getElementById("base64Input").value;
+            try {
+                const response = await axios.post("/convert/", { base64_str: base64Str });
+                const image = response.data;
+                document.getElementById("imageContainer").innerHTML = `<img src="data:image/png;base64,${image}" alt="Converted Image">`;
+            } catch (error) {
+                console.error("Error converting base64 to image:", error);
+                alert("Error converting base64 to image. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>
+
